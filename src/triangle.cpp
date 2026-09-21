@@ -63,9 +63,11 @@ double Triangle::getIntersection(Ray ray){
    if (intersect.x < minX || intersect.x > maxX
 	|| intersect.y < minY || intersect.y > maxY
 	|| intersect.z < minZ || intersect.z > maxZ) {
+	
 	return false;
    }
-   */ 
+   */
+    
 
    Vector dist = solveScalersDenom(right, up, vect, ray.point+ray.vector*time-center, denom); 
    unsigned char tmp = (thirdX - dist.x) * textureY + (thirdX-textureX) * (dist.y - textureY) < 0.0;
@@ -78,14 +80,16 @@ bool Triangle::getLightIntersection(Ray ray, double* fill){
    const double r = -norm/t;
    if(r<=0. || r>=1.) return false;
    //Vector dist = solveScalers(right, up, vect, ray.point+ray.vector*r-center);
-
+   
+   /*
    Vector intersect = ray.point + ray.vector * r;
 
    if (intersect.x < minX || intersect.x > maxX
 	|| intersect.y < minY || intersect.y > maxY
 	|| intersect.z < minZ || intersect.z > maxZ) {
 	return false;
-   }
+   } 
+   */
 
    Vector dist = solveScalersDenom(right, up, vect, ray.point+ray.vector*r-center, denom);
    unsigned char tmp = (thirdX - dist.x) * textureY + (thirdX-textureX) * (dist.y - textureY) < 0.0;

@@ -3,6 +3,9 @@
 #include "plane.h"
 
 class Box : public Plane{
+private:
+  double denom;
+	
 public:
   Box(const Vector &c, Texture* t, double ya, double pi, double ro, double tx, double ty);
   Box(const Vector &c, Texture* t, double ya, double pi, double ro, double tx);
