@@ -78,7 +78,7 @@ public:
   }
   
   Vector solveScalers(Vector v1, Vector v2, Vector v3, Vector solve);
-
+  Vector solveScalersDenom(Vector v1, Vector v2, Vector v3, Vector C, double denom);
 int print_vector(FILE *stream, const struct printf_info *info, const void 
 *const *args);
 

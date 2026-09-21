@@ -3,6 +3,15 @@
 #include "plane.h"
 
 class Triangle : public Plane{
+private:
+   double denom;
+   double minX;
+   double minY;
+   double minZ;
+   double maxX;
+   double maxY;
+   double maxZ;
+
 public:
    double thirdX;
    Triangle(Vector c, Vector b, Vector a, Texture* t);
