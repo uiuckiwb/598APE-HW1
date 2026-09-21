@@ -16,6 +16,7 @@
 using namespace std;
 
 #include <sys/time.h>
+#include <omp.h>
 
 float tdiff(struct timeval *start, struct timeval *end) {
   return (end->tv_sec-start->tv_sec) + 1e-6*(end->tv_usec-start->tv_usec);
@@ -46,10 +47,19 @@ void set(int i, int j, unsigned char r, unsigned char g, unsigned char b){
 }
 
 void refresh(Autonoma* c){
+   /*
    for(int n = 0; n<H*W; ++n) 
    { 
       Vector ra = c->camera.forward+((double)(n%W)/W-.5)*((c->camera.right))+(.5-(double)(n/W)/H)*((c->camera.up));
       calcColor(&DATA[3*n], c, Ray(c->camera.focus, ra), 0);
+   }
+   */
+   #pragma omp parallel for num_threads(8)
+   for(int w = 0; w < W; w++){
+	for (int h = 0; h < H; h++){
+	   Vector ra = c->camera.forward+((double)(w)/W-.5)*((c->camera.right))+(.5-(double)(h)/H)*((c->camera.up));
+           calcColor(&DATA[3*(h*W+w)], c, Ray(c->camera.focus, ra), 0);
+	}
    }
 }
 
