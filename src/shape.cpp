@@ -91,7 +91,7 @@ void calcColor(unsigned char* toFill,Autonoma* c, Ray ray, unsigned int depth){
    Shape* curShape = min_shape; //times[min_index].shape;
 
    Vector intersect = curTime*ray.vector+ray.point;
-   double opacity, reflection, ambient;
+   double opacity = 0, reflection = 0, ambient = 0;
    curShape->getColor(toFill, &ambient, &opacity, &reflection, c, Ray(intersect, ray.vector), depth);
    
    double lightData[3];
@@ -100,7 +100,7 @@ void calcColor(unsigned char* toFill,Autonoma* c, Ray ray, unsigned int depth){
    toFill[1] = (unsigned char)(toFill[1]*(ambient+lightData[1]*(1-ambient)));
    toFill[2] = (unsigned char)(toFill[2]*(ambient+lightData[2]*(1-ambient)));
    if(depth<c->depth && (opacity<1-1e-6 || reflection>1e-6)){
-      unsigned char col[4];
+      unsigned char col[4] = {0};
       if(opacity<1-1e-6){
          Ray nextRay = Ray(intersect+ray.vector*1E-4, ray.vector);
          calcColor(col, c, nextRay, depth+1);

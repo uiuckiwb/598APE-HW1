@@ -7,6 +7,10 @@ Light::Light(const Vector & cente, unsigned char* colo) : center(cente){
    color = colo;
 }
 
+Light::~Light(){
+   free(color);
+}
+
 unsigned char* Light::getColor(unsigned char a, unsigned char b, unsigned char c){
    unsigned char* r = (unsigned char*)malloc(sizeof(unsigned char)*3);
    r[0] = a;
@@ -33,6 +37,30 @@ Autonoma::Autonoma(const Camera& c, Texture* tex): camera(c){
    skybox = tex;
 }
 
+Autonoma::~Autonoma(){
+   ShapeNode* curr_shape = listStart;
+   while (curr_shape != NULL) {
+	ShapeNode* next = curr_shape->next;
+	delete curr_shape->data;
+	free(curr_shape);
+	curr_shape = next;
+   }
+
+   LightNode* curr_light = lightStart;
+   while (curr_light != NULL) {
+	LightNode* next = curr_light->next;
+	delete curr_light->data;
+	free(curr_light);
+	curr_light = next;
+   }
+   delete skybox;
+   skybox = NULL;
+   listStart = NULL;
+   listEnd = NULL;
+   lightStart = NULL;
+   lightEnd = NULL;
+}
+
 void Autonoma::addShape(Shape* r){
    ShapeNode* hi = (ShapeNode*)malloc(sizeof(ShapeNode));
    hi->data = r;
@@ -50,7 +78,7 @@ void Autonoma::addShape(Shape* r){
 void Autonoma::removeShape(ShapeNode* s){
    if(s==listStart){
       if(s==listEnd){
-         listStart = listStart = NULL;
+         listStart = listEnd = NULL;
       }
       else{
          listStart = s->next;
@@ -66,6 +94,7 @@ void Autonoma::removeShape(ShapeNode* s){
       b4->next = aft;
       aft->prev = b4;
    }
+   delete s->data;
    free(s);
 }
 
@@ -86,7 +115,7 @@ void Autonoma::addLight(Light* r){
 void Autonoma::removeLight(LightNode* s){
    if(s==lightStart){
       if(s==lightEnd){
-         lightStart = lightStart = NULL;
+         lightStart = lightEnd = NULL;
       }
       else{
          lightStart = s->next;
@@ -102,6 +131,7 @@ void Autonoma::removeLight(LightNode* s){
       b4->next = aft;
       aft->prev = b4;
    }
+   delete s->data;
    free(s);
 }
 

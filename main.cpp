@@ -572,8 +572,10 @@ int main(int argc, const char** argv){
       } else {
          snprintf(command, sizeof(command), "ffmpeg -y -r 24 -i %s.tmp.%%07d.ppm -vcodec ffv1 %s.tmp.avi && ffmpeg -y -i %s.tmp.avi -c:v libx264 -preset veryslow -qp 0 -r 24 %s", outFile, outFile, outFile, outFile);         
       }
+      delete MAIN_DATA;
       return system(command);
-   }   
+   }
+   delete MAIN_DATA;
    return 0;
    
 }
