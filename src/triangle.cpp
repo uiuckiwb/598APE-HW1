@@ -1,6 +1,6 @@
 #include "triangle.h"
 
-Triangle::Triangle(Vector c, Vector b, Vector a, Texture* t):Plane(Vector(0,0,0), t, 0., 0., 0., 0., 0.){
+Triangle::Triangle(Vector c, Vector b, Vector a, Texture* t):Plane(Vector(0,0,0), t, 0., 0., 0., 0., 0.), bscenter(Vector(0.0, 0.0, 0.0)){
    center = c;
    Vector righta = (b-c);
    textureX = righta.mag();
@@ -43,6 +43,9 @@ Triangle::Triangle(Vector c, Vector b, Vector a, Texture* t):Plane(Vector(0,0,0)
    maxY = std::max(a.y, std::max(b.y, c.y));
    maxZ = std::max(a.z, std::max(b.z, c.z));
 
+   bscenter = Vector((minX + maxX) * 0.5, (minY + maxY) * 0.5, (minZ + maxZ) * 0.5);
+   bsradsq = ((maxX-minX)*(maxX-minX) + (maxY-minY)*(maxY-minY) + (maxZ-minZ)*(maxZ-minZ)) * 0.25;
+
    denom = right.z*up.y*vect.x - right.y*up.z*vect.x - right.z*up.x*vect.y +
 	   right.x*up.z*vect.y + right.y*up.x*vect.z - right.x*up.y*vect.z;
    d = -vect.dot(center);
@@ -67,6 +70,18 @@ double Triangle::getIntersection(Ray ray){
 	return false;
    }
    */
+
+   
+   Vector test = ray.point - bscenter;
+   double a = ray.vector.dot(ray.vector);
+   double b = 2.0 * test.dot(ray.vector);
+   double c = test.dot(test) - bsradsq;
+
+   if (b * b - 4.0 * a * c < 0.0) {
+	return inf;
+   }
+   
+   
     
 
    Vector dist = solveScalersDenom(right, up, vect, ray.point+ray.vector*time-center, denom); 

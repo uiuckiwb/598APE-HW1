@@ -11,6 +11,8 @@ private:
    double maxX;
    double maxY;
    double maxZ;
+   Vector bscenter;
+   double bsradsq;
 
 public:
    double thirdX;
