@@ -71,6 +71,7 @@ double Triangle::getIntersection(Ray ray){
    }
    */
    
+   
 
    /*
    Vector test = ray.point - bscenter;
@@ -97,7 +98,7 @@ bool Triangle::getLightIntersection(Ray ray, double* fill){
    if(r<=0. || r>=1.) return false;
    //Vector dist = solveScalers(right, up, vect, ray.point+ray.vector*r-center);
    
-   
+   /*
    Vector intersect = ray.point + ray.vector * r;
 
    if (intersect.x < minX || intersect.x > maxX
@@ -105,6 +106,7 @@ bool Triangle::getLightIntersection(Ray ray, double* fill){
 	|| intersect.z < minZ || intersect.z > maxZ) {
 	return false;
    } 
+   */
    
 
    Vector dist = solveScalersDenom(right, up, vect, ray.point+ray.vector*r-center, denom);
