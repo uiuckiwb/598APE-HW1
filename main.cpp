@@ -54,7 +54,7 @@ void refresh(Autonoma* c){
       calcColor(&DATA[3*n], c, Ray(c->camera.focus, ra), 0);
    }
    */
-   #pragma omp parallel for schedule(dynamic, 1)
+   #pragma omp parallel for schedule(guided)
    for(int w = 0; w < W; w++){
 	for (int h = 0; h < H; h++){
 	   Vector ra = c->camera.forward+((double)(w)/W-.5)*((c->camera.right))+(.5-(double)(h)/H)*((c->camera.up));
