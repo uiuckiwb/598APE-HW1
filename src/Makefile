@@ -3,7 +3,7 @@ output := -o
 copt := -c 
 SRC_DIR := ./
 OBJ_DIR := ./
-FLAGS := -O2 -g -Werror -fopt-info-vec -fopt-info-inline -fopt-info-loop -fopenmp
+FLAGS := -O3 -g -Werror -fopt-info-vec -fopt-info-inline -fopt-info-loop -fopenmp -ffast-math -fno-finite-math-only
 
 CPP_FILES := $(wildcard *.cpp)
 OBJ_FILES := $(addprefix $(OBJ_DIR),$(notdir $(CPP_FILES:.cpp=.obj)))
